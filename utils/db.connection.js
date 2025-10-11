@@ -1,42 +1,65 @@
-const mysql = require("mysql2");
+const {Sequelize} =  require('sequelize');
 
-const db = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"greatJob108",
-    database:"students_management",
-})
+const sequelize = new Sequelize('students_management', 'root', 'greatJob108', {
+    host: 'localhost',
+    dialect:'mysql'
+});
 
 
-db.connect((err)=>{
-    if(err){
-        console.log(err);
-        return;
-    }
+(async () =>{ 
+try{
+await sequelize.authenticate();
+console.log('Connection has been established successfully.');
+}catch(err){
+console.log(err);
 
-    console.log("Connection has been created");
+}
+})();
+
+
+module.exports = sequelize;
+
+
+
+// const mysql = require("mysql2");
+
+// const db = mysql.createConnection({
+//     host:"localhost",
+//     user:"root",
+//     password:"greatJob108",
+//     database:"students_management",
+// })
+
+
+// db.connect((err)=>{
+//     if(err){
+//         console.log(err);
+//         return;
+//     }
+
+//     console.log("Connection has been created");
     
-    const createStudentsTable = `create table IF NOT EXISTS Management(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50),
-    email VARCHAR(50) UNIQUE,
-    age INT
-    )`;
+//     const createStudentsTable = `create table IF NOT EXISTS Management(
+//     id INT AUTO_INCREMENT PRIMARY KEY,
+//     name VARCHAR(50),
+//     email VARCHAR(50) UNIQUE,
+//     age INT
+//     )`;
 
-    db.execute(createStudentsTable, (err) => {
-        if(err){
-        console.log(err);
-        db.end();
-        return;
-    }
+//     db.execute(createStudentsTable, (err) => {
+//         if(err){
+//         console.log(err);
+//         db.end();
+//         return;
+//     }
 
-    console.log("Table is created");
+//     console.log("Table is created");
     
-    })
-})
+//     })
+// })
 
 
 
-module.exports = db;
+// module.exports = db;
 
 
